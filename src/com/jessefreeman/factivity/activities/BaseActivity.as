@@ -38,12 +38,15 @@ package com.jessefreeman.factivity.activities
         private static const MILLISECONDS:int = 1000;
 
         protected var nextScreen:Class;
+        protected var nextScreenData:*;
         protected var nextScreenCounter:Number = 0;
         protected var nextScreenDelay:Number = 0;
         protected var stateManager:IActivityManager;
+        protected var data:*;
 
-        public function BaseActivity(stateManager:IActivityManager, date:* = null)
+        public function BaseActivity(stateManager:IActivityManager, data:* = null)
         {
+            this.data = data;
             this.stateManager = stateManager;
             addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
             init();
@@ -70,15 +73,16 @@ package com.jessefreeman.factivity.activities
             //Override and add custom logic here.
         }
 
-        protected function startNextScreenTimer(state:Class, delay:int = 1):void
+        protected function startNextActivityTimer(activity:Class, delay:int = 1, data:* = null):void
         {
+            this.nextScreenData = data;
             nextScreenDelay = delay * MILLISECONDS;
-            nextScreen = state;
+            nextScreen = activity;
         }
 
         protected function onNextScreen(event:TimerEvent = null):void
         {
-            nextActivity(nextScreen);
+            nextActivity(nextScreen, nextScreenData);
         }
 
         protected function nextActivity(activity:Class, data:* = null):void
