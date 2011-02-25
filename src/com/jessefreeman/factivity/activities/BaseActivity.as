@@ -81,9 +81,9 @@ package com.jessefreeman.factivity.activities
             nextActivity(nextScreen);
         }
 
-        protected function nextActivity(activity:Class):void
+        protected function nextActivity(activity:Class, data:* = null):void
         {
-            stateManager.setCurrentActivity(activity);
+            stateManager.setCurrentActivity(activity, data);
         }
 
         public function update(elapsed:Number = 0):void
