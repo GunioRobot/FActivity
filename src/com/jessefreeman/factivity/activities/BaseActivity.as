@@ -27,6 +27,9 @@ package com.jessefreeman.factivity.activities
 {
     import com.jessefreeman.factivity.managers.IActivityManager;
 
+    import com.jessefreeman.factivity.threads.IRunnable;
+    import com.jessefreeman.factivity.threads.ThreadManager;
+
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.events.TimerEvent;
@@ -43,32 +46,18 @@ package com.jessefreeman.factivity.activities
         protected var nextScreenDelay:Number = 0;
         protected var stateManager:IActivityManager;
         protected var data:*;
+        protected var threadManager:ThreadManager;
 
         public function BaseActivity(stateManager:IActivityManager, data:* = null)
         {
+            //Need to look into possibly injecting this
+            this.threadManager = new ThreadManager();
             this.data = data;
             this.stateManager = stateManager;
-            addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
-            init();
+            onCreate();
         }
 
-        protected function onAddedToStage(event:Event):void
-        {
-            removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-            addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage, false, 0, true);
-
-            // Add more added logic here
-        }
-
-        protected function onRemovedFromStage(event:Event):void
-        {
-            removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-            addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
-
-            // Add more remove logic here
-        }
-
-        protected function init():void
+        protected function onCreate():void
         {
             //Override and add custom logic here.
         }
@@ -99,6 +88,8 @@ package com.jessefreeman.factivity.activities
                     onNextScreen();
             }
 
+            threadManager.update(elapsed);
+
             render();
         }
 
@@ -114,6 +105,26 @@ package com.jessefreeman.factivity.activities
         public function loadState(obj:Object):void
         {
             //TODO add core load logic here
+        }
+
+        public function onStart():void
+        {
+
+        }
+
+        public function onStop():void
+        {
+
+        }
+
+        protected function addThread(value:IRunnable):int
+        {
+            return threadManager.addThread(value);
+        }
+
+        protected function removeThread(value:IRunnable):IRunnable
+        {
+            return threadManager.removeThread(value);
         }
     }
 }

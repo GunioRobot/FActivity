@@ -70,11 +70,17 @@ package com.jessefreeman.factivity.managers
             currentActivity = newActivity;
 
             _target.addChild(currentActivity);
+
+            currentActivity.onStart();
         }
 
         protected function removeActivity():void
         {
+            currentActivity.onStop();
+
             _target.removeChild(currentActivity);
+
+
         }
 
     }
