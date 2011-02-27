@@ -51,7 +51,7 @@ package com.jessefreeman.factivity.threads
 
             if(!instances[value])
             {
-                var index:int = threads.length < maxActive ? threads.push(value) : -1;
+                var index:int = threads.length < maxActive ? (threads.push(value)-1) : -1;
                 instances[value] = index;
             }
 
@@ -69,19 +69,34 @@ package com.jessefreeman.factivity.threads
 
             var i:int;
             var thread:IRunnable;
+            var finishedThreads:Array = [];
 
             for (i = 0; i < total; i++)
             {
+
                 thread = threads[i];
+
                 thread.run(elapsed);
                 if(!thread.isRunning())
-                    removeThread(thread);
+                    finishedThreads.push(thread);
+            }
+
+            removeThreads.apply(this, finishedThreads)
+        }
+
+        private function removeThreads(...threads):void
+        {
+            var thread:IRunnable;
+            for each(thread in threads)
+            {
+                removeThread(thread);
             }
         }
 
         public function removeThread(value:IRunnable):IRunnable
         {
-            threads.splice(instances[value],1);
+            var index:int = instances[value];
+            threads.splice(index,1);
             delete instances[value];
             return value;
         }
