@@ -62,8 +62,29 @@ package com.jessefreeman.factivity
 
             if (!stage)
                 addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            else
+                addStageFocusEvents();
 
             init();
+        }
+
+        protected function addStageFocusEvents():void
+        {
+            if(!stage.hasEventListener(Event.ACTIVATE))
+                stage.addEventListener(Event.ACTIVATE, flashActive);
+
+            if(!stage.hasEventListener(Event.DEACTIVATE))
+                stage.addEventListener(Event.DEACTIVATE, flashDeactive);
+        }
+
+        protected function flashActive (event:Event):void
+        {
+            activate();
+        }
+
+        protected function flashDeactive (event:Event):void
+        {
+            pause();
         }
 
         protected function init():void
@@ -81,6 +102,7 @@ package com.jessefreeman.factivity
         {
             removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+            addStageFocusEvents();
         }
 
         protected function onRemovedFromStage(event:Event):void
