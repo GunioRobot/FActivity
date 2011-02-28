@@ -60,7 +60,7 @@ package com.jessefreeman.factivity
             defaultStartActivity = startActivity;
             this.activityManager = activityManager;
 
-            if (stage)
+            if (!stage)
                 addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
             init();

@@ -38,7 +38,7 @@ package com.jessefreeman.factivity.activities
     {
         public static var fullSizeWidth:int = 0;
         public static var fullSizeHeight:int = 0;
-        private static const MILLISECONDS:int = 1000;
+        public static const MILLISECONDS:int = 1000;
 
         protected var nextScreen:Class;
         protected var nextScreenData:*;
