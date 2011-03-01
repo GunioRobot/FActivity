@@ -75,6 +75,8 @@ package com.jessefreeman.factivity
 
             if(!stage.hasEventListener(Event.DEACTIVATE))
                 stage.addEventListener(Event.DEACTIVATE, flashDeactive);
+
+            activate();
         }
 
         protected function flashActive (event:Event):void
