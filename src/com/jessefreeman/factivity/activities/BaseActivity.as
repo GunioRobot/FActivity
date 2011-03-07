@@ -44,16 +44,16 @@ package com.jessefreeman.factivity.activities
         protected var nextScreenData:*;
         protected var nextScreenCounter:Number = 0;
         protected var nextScreenDelay:Number = 0;
-        protected var stateManager:IActivityManager;
+        protected var activityManager:IActivityManager;
         protected var data:*;
         protected var threadManager:ThreadManager;
 
-        public function BaseActivity(stateManager:IActivityManager, data:* = null)
+        public function BaseActivity(activityManager:IActivityManager, data:* = null)
         {
             //Need to look into possibly injecting this
             this.threadManager = new ThreadManager();
             this.data = data;
-            this.stateManager = stateManager;
+            this.activityManager = activityManager;
             onCreate();
         }
 
@@ -76,7 +76,7 @@ package com.jessefreeman.factivity.activities
 
         protected function nextActivity(activity:Class, data:* = null):void
         {
-            stateManager.setCurrentActivity(activity, data);
+            activityManager.setCurrentActivity(activity, data);
         }
 
         public function update(elapsed:Number = 0):void
