@@ -71,20 +71,20 @@ package com.jessefreeman.factivity
         protected function addStageFocusEvents():void
         {
             if(!stage.hasEventListener(Event.ACTIVATE))
-                stage.addEventListener(Event.ACTIVATE, flashActive);
+                stage.addEventListener(Event.ACTIVATE, onFlashResume);
 
             if(!stage.hasEventListener(Event.DEACTIVATE))
-                stage.addEventListener(Event.DEACTIVATE, flashDeactive);
+                stage.addEventListener(Event.DEACTIVATE, onFlashDeactivate);
 
-            activate();
+            resume();
         }
 
-        protected function flashActive (event:Event):void
+        protected function onFlashResume (event:Event):void
         {
-            activate();
+            resume();
         }
 
-        protected function flashDeactive (event:Event):void
+        protected function onFlashDeactivate (event:Event):void
         {
             pause();
         }
@@ -141,7 +141,7 @@ package com.jessefreeman.factivity
 
         }
 
-        public function activate():void
+        public function resume():void
         {
             updateTimer.start();
         }
