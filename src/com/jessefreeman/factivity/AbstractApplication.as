@@ -60,12 +60,14 @@ package com.jessefreeman.factivity
             defaultStartActivity = startActivity;
             this.activityManager = activityManager;
 
+            init();
+
             if (!stage)
                 addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
             else
                 addStageFocusEvents();
 
-            init();
+
         }
 
         protected function addStageFocusEvents():void
