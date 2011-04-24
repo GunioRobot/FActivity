@@ -27,6 +27,8 @@ package com.jessefreeman.factivity.activities
 {
     import com.jessefreeman.factivity.managers.IActivityManager;
 
+    import com.jessefreeman.factivity.managers.SingletonManager;
+    import com.jessefreeman.factivity.managers.SoundManager;
     import com.jessefreeman.factivity.threads.IRunnable;
     import com.jessefreeman.factivity.threads.ThreadManager;
 
@@ -46,12 +48,14 @@ package com.jessefreeman.factivity.activities
         protected var nextScreenDelay:Number = 0;
         protected var activityManager:IActivityManager;
         protected var data:*;
-        protected var threadManager:ThreadManager;
+        //TODO This should be injected
+        protected var threadManager:ThreadManager = SingletonManager.getClassReference(ThreadManager);
+        protected var soundManager:SoundManager = SingletonManager.getClassReference(SoundManager);
+
 
         public function BaseActivity(activityManager:IActivityManager, data:* = null)
         {
             //Need to look into possibly injecting this
-            this.threadManager = new ThreadManager();
             this.data = data;
             this.activityManager = activityManager;
             onCreate();

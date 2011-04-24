@@ -26,6 +26,10 @@ package com.jessefreeman.factivity.managers
 {
     import com.jessefreeman.factivity.activities.BaseActivity;
 
+    import com.jessefreeman.factivity.analytics.ITrack;
+
+    import com.jessefreeman.factivity.utils.DeviceUtil;
+
     import flash.display.DisplayObjectContainer;
 
     public class ActivityManager implements IActivityManager
@@ -33,9 +37,14 @@ package com.jessefreeman.factivity.managers
 
         protected var currentActivity:BaseActivity;
         protected var _target:DisplayObjectContainer;
+        private var tracker:ITrack;
+        private var activeClassName:String;
+        private var os:String;
 
-        public function ActivityManager()
+        public function ActivityManager(tracker:ITrack)
         {
+            this.tracker = tracker;
+            os = DeviceUtil.os;
         }
 
         public function set target(target:DisplayObjectContainer):void
@@ -45,6 +54,12 @@ package com.jessefreeman.factivity.managers
 
         public function setCurrentActivity(activity:Class, data:* = null):void
         {
+            if(tracker)
+            {
+                activeClassName = String(activity).split(" ")[1].substr(0, -1);
+                tracker.trackPageview("/MatchHack/" + os + "/" + activeClassName);
+            }
+
             var newActivity:BaseActivity = new activity(this, data);
             onSwapActivities(newActivity);
         }
@@ -67,6 +82,13 @@ package com.jessefreeman.factivity.managers
 
         protected function addActivity(newActivity:BaseActivity):void
         {
+            if(tracker)
+            {
+                //Inject tracker to any new Activity
+                if (newActivity.hasOwnProperty("tracker"))
+                    newActivity["tracker"] = tracker;
+            }
+
             currentActivity = newActivity;
 
             _target.addChild(currentActivity);

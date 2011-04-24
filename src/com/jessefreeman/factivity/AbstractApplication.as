@@ -27,6 +27,9 @@ package com.jessefreeman.factivity
 {
     import com.jessefreeman.factivity.managers.IActivityManager;
 
+    import com.jessefreeman.factivity.managers.SingletonManager;
+    import com.jessefreeman.factivity.managers.SoundManager;
+
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.events.TimerEvent;
@@ -37,6 +40,7 @@ package com.jessefreeman.factivity
     {
 
         public static const FRAME_RATE:int = 30;
+        protected var soundManager:SoundManager = SingletonManager.getClassReference(SoundManager) as SoundManager;
 
         protected var defaultX:int = 0;
         protected var defaultY:int = 0;
@@ -83,11 +87,13 @@ package com.jessefreeman.factivity
 
         protected function onFlashResume (event:Event):void
         {
+            soundManager.playSounds();
             resume();
         }
 
         protected function onFlashDeactivate (event:Event):void
         {
+            soundManager.pauseSounds();
             pause();
         }
 
