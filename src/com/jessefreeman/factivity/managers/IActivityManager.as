@@ -38,5 +38,7 @@ package com.jessefreeman.factivity.managers
         function setCurrentActivity(activity:Class, data:* = null):void;
 
         function updateCurrentActivity(elapsed:Number = 0):void;
+
+        function back():void;
     }
 }

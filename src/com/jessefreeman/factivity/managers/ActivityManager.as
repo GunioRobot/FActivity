@@ -105,5 +105,9 @@ package com.jessefreeman.factivity.managers
 
         }
 
+        public function back():void
+        {
+            currentActivity.onBack()
+        }
     }
 }

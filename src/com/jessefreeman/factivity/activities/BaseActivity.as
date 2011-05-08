@@ -130,5 +130,10 @@ package com.jessefreeman.factivity.activities
         {
             return threadManager.removeThread(value);
         }
+
+        public function onBack():void
+        {
+            // This should be overridden
+        }
     }
 }
