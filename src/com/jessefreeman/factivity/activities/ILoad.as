@@ -27,6 +27,6 @@ package com.jessefreeman.factivity.activities
 {
     public interface ILoad
     {
-        function loadState(obj:Object):void;
+        function loadState():void;
     }
 }

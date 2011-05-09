@@ -21,20 +21,42 @@
  *
  */
 
-package com.jessefreeman.factivity.utils
+package com.jessefreeman.factivity.threads
 {
-    public class ClassUtil
+    public class Thread implements IRunnable
     {
+        protected var updateCallback:Function;
+        protected var finishCallback:Function;
+        protected var running:Boolean;
 
-        /**
-         * Converts a class into a string.
-         *
-         * @param value Class to convert to string.
-         * @return String name of supplied class.
-         */
-        public static function classToString(value:Class):String
+        public function Thread(updateCallback:Function = null, finishCallback:Function = null)
         {
-            return String(value).split(" ")[1].substr(0, -1);
+            this.finishCallback = finishCallback;
+            this.updateCallback = updateCallback;
+
+        }
+
+        public function start():void
+        {
+            running = true;
+        }
+
+        public function run(elapsed:Number = 0):void
+        {
+            if (updateCallback != null)
+                updateCallback();
+        }
+
+        public function isRunning():Boolean
+        {
+            return running;
+        }
+
+        protected function finish():void
+        {
+            running = false;
+            if (finishCallback != null)
+                finishCallback();
         }
     }
 }

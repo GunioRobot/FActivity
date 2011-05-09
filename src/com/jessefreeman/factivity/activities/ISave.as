@@ -27,6 +27,6 @@ package com.jessefreeman.factivity.activities
 {
     public interface ISave
     {
-        function saveState(obj:Object, activeState:Boolean = true):void;
+        function saveState():void;
     }
 }

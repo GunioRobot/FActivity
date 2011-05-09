@@ -18,6 +18,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ *
  */
 
 package com.jessefreeman.factivity.managers
@@ -47,7 +48,8 @@ package com.jessefreeman.factivity.managers
         {
             var singleton:* = singletons[ classReference ];
 
-            if (!singleton) {
+            if (!singleton)
+            {
                 singleton = new classReference();
                 singletons[ classReference ] = singleton;
             }
@@ -60,7 +62,8 @@ package com.jessefreeman.factivity.managers
          */
         private static function get instance():SingletonManager
         {
-            if (!_instance) {
+            if (!_instance)
+            {
                 _instance = new SingletonManager(new SingletonEnforcer());
             }
 

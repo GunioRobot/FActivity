@@ -23,46 +23,16 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Jesse Freeman
- * Date: 2/25/11
- * Time: 8:15 PM
+ * Date: 3/8/11
+ * Time: 8:18 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.jessefreeman.factivity.threads
+package com.jessefreeman.factivity.serialize
 {
-    public class GreenThread implements IRunnable
+    public interface ISerializeToObject
     {
-        protected var updateCallback:Function;
-        protected var finishCallback:Function;
-        protected var running:Boolean;
+        function parseObject(value:Object):void;
 
-        public function GreenThread(updateCallback:Function = null, finishCallback:Function = null)
-        {
-            this.finishCallback = finishCallback;
-            this.updateCallback = updateCallback;
-
-        }
-
-        public function start():void
-        {
-            running = true;
-        }
-
-        public function run(elapsed:Number = 0):void
-        {
-            if(updateCallback != null)
-                updateCallback();
-        }
-
-        public function isRunning():Boolean
-        {
-            return running;
-        }
-
-        protected function finish():void
-        {
-            running = false;
-            if(finishCallback != null)
-                finishCallback();
-        }
+        function toObject():Object;
     }
 }

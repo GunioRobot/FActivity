@@ -25,12 +25,13 @@
  *
  */
 
-package com.jessefreeman.factivity.managers
+package com.jessefreeman.factivity.sounds
 {
+    import com.jessefreeman.factivity.managers.*;
     import com.jessefreeman.factivity.sounds.FActivitySound;
     import com.jessefreeman.factivity.utils.ClassUtil;
 
-    public class SoundManager
+    public class SoundManager implements ISoundManager
     {
 
         private var sounds:Array = [];
@@ -43,17 +44,11 @@ package com.jessefreeman.factivity.managers
         {
         }
 
-        /**
-         * Set up and play a looping background soundtrack.
-         *
-         * @param    Music        The sound file you want to loop in the background.
-         * @param    Volume        How loud the sound should be, from 0 to 1.
-         */
         public function playMusic(Music:Class, Volume:Number = 1.0):void
         {
             var soundClassName:String = ClassUtil.classToString(Music);
 
-            if(activeMusic == soundClassName)
+            if (activeMusic == soundClassName)
                 return;
 
             if (music == null)
@@ -67,15 +62,6 @@ package com.jessefreeman.factivity.managers
             activeMusic = soundClassName;
         }
 
-        /**
-         * Creates a new sound object from an embedded <code>Class</code> object.
-         *
-         * @param    EmbeddedSound    The sound you want to play.
-         * @param    Volume            How loud to play it (0 to 1).
-         * @param    Looped            Whether or not to loop this sound.
-         *
-         * @return    A <code>FlxSound</code> object.
-         */
         public function play(EmbeddedSound:Class, Volume:Number = 1.0, Looped:Boolean = false):FActivitySound
         {
             var sl:uint = sounds.length;
@@ -91,30 +77,17 @@ package com.jessefreeman.factivity.managers
             return s;
         }
 
-        /**
-         * Set <code>mute</code> to true to turn off the sound.
-         *
-         * @default false
-         */
         public function get mute():Boolean
         {
             return _mute;
         }
 
-        /**
-         * @private
-         */
         public function set mute(Mute:Boolean):void
         {
             _mute = Mute;
             changeSounds();
         }
 
-        /**
-         * Get a number that represents the mute state that we can multiply into a sound transform.
-         *
-         * @return        An unsigned integer - 0 if muted, 1 if not muted.
-         */
         public function getMuteValue():uint
         {
             if (_mute)
@@ -123,19 +96,11 @@ package com.jessefreeman.factivity.managers
                 return 1;
         }
 
-        /**
-         * Set <code>volume</code> to a number between 0 and 1 to change the global volume.
-         *
-         * @default 0.5
-         */
         public function get volume():Number
         {
             return _volume;
         }
 
-        /**
-         * @private
-         */
         public function set volume(Volume:Number):void
         {
             _volume = Volume;
@@ -146,11 +111,6 @@ package com.jessefreeman.factivity.managers
             changeSounds();
         }
 
-        /**
-         * Called by FlxGame on state changes to stop and destroy sounds.
-         *
-         * @param    ForceDestroy        Kill sounds even if they're flagged <code>survive</code>.
-         */
         public function destroySounds(ForceDestroy:Boolean = false):void
         {
             if (sounds == null)
@@ -159,7 +119,8 @@ package com.jessefreeman.factivity.managers
                 music.destroy();
             var s:FActivitySound;
             var sl:uint = sounds.length;
-            for (var i:uint = 0; i < sl; i++) {
+            for (var i:uint = 0; i < sl; i++)
+            {
                 s = sounds[i] as FActivitySound;
                 if ((s != null) && (ForceDestroy || !s.survive))
                     s.destroy();
@@ -168,48 +129,42 @@ package com.jessefreeman.factivity.managers
             activeMusic = null;
         }
 
-        /**
-         * An internal function that adjust the volume levels and the music channel after a change.
-         */
-        protected function changeSounds():void
+        public function changeSounds():void
         {
             if ((music != null) && music.active)
                 music.updateTransform();
             var s:FActivitySound;
             var sl:uint = sounds.length;
-            for (var i:uint = 0; i < sl; i++) {
+            for (var i:uint = 0; i < sl; i++)
+            {
                 s = sounds[i] as FActivitySound;
                 if ((s != null) && s.active)
                     s.updateTransform();
             }
         }
 
-        /**
-         * Internal helper, pauses all game sounds.
-         */
         public function pauseSounds():void
         {
             if ((music != null) && music.active)
                 music.pause();
             var s:FActivitySound;
             var sl:uint = sounds.length;
-            for (var i:uint = 0; i < sl; i++) {
+            for (var i:uint = 0; i < sl; i++)
+            {
                 s = sounds[i] as FActivitySound;
                 if ((s != null) && s.active)
                     s.pause();
             }
         }
 
-        /**
-         * Internal helper, pauses all game sounds.
-         */
         public function playSounds():void
         {
             if ((music != null) && music.active)
                 music.play();
             var s:FActivitySound;
             var sl:uint = sounds.length;
-            for (var i:uint = 0; i < sl; i++) {
+            for (var i:uint = 0; i < sl; i++)
+            {
                 s = sounds[i] as FActivitySound;
                 if ((s != null) && s.active)
                     s.play();

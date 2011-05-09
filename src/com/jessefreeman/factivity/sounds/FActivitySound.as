@@ -27,7 +27,8 @@
 
 package com.jessefreeman.factivity.sounds
 {
-    import com.jessefreeman.factivity.managers.SoundManager;
+    import com.jessefreeman.factivity.sounds.ISoundManager;
+    import com.jessefreeman.factivity.sounds.SoundManager;
 
     import flash.events.Event;
     import flash.media.Sound;
@@ -68,7 +69,7 @@ package com.jessefreeman.factivity.sounds
         protected var _fadeInTimer:Number;
         protected var _fadeInTotal:Number;
         public var active:Boolean;
-        private var manager:SoundManager;
+        private var manager:ISoundManager;
 
         /**
          * The FlxSound constructor gets all the variables initialized, but NOT ready to play a sound yet.
@@ -138,14 +139,17 @@ package com.jessefreeman.factivity.sounds
         {
             if (_position < 0)
                 return;
-            if (_looped) {
-                if (_position == 0) {
+            if (_looped)
+            {
+                if (_position == 0)
+                {
                     if (_channel == null)
                         _channel = _sound.play(0, 9999, _transform);
                     if (_channel == null)
                         active = false;
                 }
-                else {
+                else
+                {
                     _channel = _sound.play(_position, 0, _transform);
                     if (_channel == null)
                         active = false;
@@ -153,9 +157,12 @@ package com.jessefreeman.factivity.sounds
                         _channel.addEventListener(Event.SOUND_COMPLETE, looped);
                 }
             }
-            else {
-                if (_position == 0) {
-                    if (_channel == null) {
+            else
+            {
+                if (_position == 0)
+                {
+                    if (_channel == null)
+                    {
                         _channel = _sound.play(0, 0, _transform);
                         if (_channel == null)
                             active = false;
@@ -163,7 +170,8 @@ package com.jessefreeman.factivity.sounds
                             _channel.addEventListener(Event.SOUND_COMPLETE, stopped);
                     }
                 }
-                else {
+                else
+                {
                     _channel = _sound.play(_position, 0, _transform);
                     if (_channel == null)
                         active = false;
@@ -178,13 +186,15 @@ package com.jessefreeman.factivity.sounds
          */
         public function pause():void
         {
-            if (_channel == null) {
+            if (_channel == null)
+            {
                 _position = -1;
                 return;
             }
             _position = _channel.position;
             _channel.stop();
-            if (_looped) {
+            if (_looped)
+            {
                 while (_position >= _sound.length)
                     _position -= _sound.length;
             }
@@ -198,7 +208,8 @@ package com.jessefreeman.factivity.sounds
         public function stop():void
         {
             _position = 0;
-            if (_channel != null) {
+            if (_channel != null)
+            {
                 _channel.stop();
                 stopped();
             }
@@ -241,7 +252,8 @@ package com.jessefreeman.factivity.sounds
         public function updateTransform():void
         {
             //TDOO need to look into how to get a reference of the manager in the sound.
-            if (manager) {
+            if (manager)
+            {
                 _transform.volume = manager.getMuteValue() * manager.volume * _volume * _volumeAdjust;
                 if (_channel != null)
                     _channel.soundTransform = _transform;

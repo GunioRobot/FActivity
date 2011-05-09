@@ -21,7 +21,6 @@
  */
 package com.jessefreeman.factivity.state
 {
-
     import flash.net.SharedObject;
 
     public class AbstractStateObject implements IStateObject
@@ -39,11 +38,13 @@ package com.jessefreeman.factivity.state
 
         public function load():void
         {
-            try {
+            try
+            {
                 sharedObject = SharedObject.getLocal(id);
                 _dataObject = sharedObject.data;
             }
-            catch(error:Error) {
+            catch(error:Error)
+            {
                 trace("Could not load shared obj");
             }
         }

@@ -32,7 +32,9 @@ package com.jessefreeman.factivity.threads
     public interface IRunnable
     {
         function run(elapsed:Number = 0):void;
+
         function isRunning():Boolean;
+
         function start():void;
     }
 }

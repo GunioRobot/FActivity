@@ -23,18 +23,29 @@
 
 package com.jessefreeman.factivity.utils
 {
-    public class ClassUtil
+    import flash.utils.getTimer;
+
+    public class TimeMethodExecutionUtil
     {
+        public static var t:int;
+        public static var threshold:int = 10;
 
         /**
-         * Converts a class into a string.
+         * This method allows you to trace out the execution time of any method.
          *
-         * @param value Class to convert to string.
-         * @return String name of supplied class.
+         * @param label - name used to display when tracing out.
+         * @param target - function to call.
+         * @param arguments - arguments to be supplied to function.
+         * @return returns any value from the target function.
          */
-        public static function classToString(value:Class):String
+        public static function execute(label:String, target:Function, ...arguments):*
         {
-            return String(value).split(" ")[1].substr(0, -1);
+            t = getTimer();
+            var value:* = target.apply(target, arguments);
+            t = (getTimer() - t);
+            if (t > threshold)
+                trace("Method '" + label + "' executed in " + t + " ms\n");
+            return value;
         }
     }
 }

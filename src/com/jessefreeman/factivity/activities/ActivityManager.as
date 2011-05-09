@@ -22,28 +22,34 @@
  * Time: 9:08 PM
  * .
  */
-package com.jessefreeman.factivity.managers
+package com.jessefreeman.factivity.activities
 {
+    import com.jessefreeman.factivity.managers.*;
     import com.jessefreeman.factivity.activities.BaseActivity;
-
     import com.jessefreeman.factivity.analytics.ITrack;
-
+    import com.jessefreeman.factivity.sounds.ISoundManager;
+    import com.jessefreeman.factivity.sounds.SoundManager;
+    import com.jessefreeman.factivity.threads.IThreadManager;
+    import com.jessefreeman.factivity.threads.ThreadManager;
     import com.jessefreeman.factivity.utils.DeviceUtil;
 
     import flash.display.DisplayObjectContainer;
 
     public class ActivityManager implements IActivityManager
     {
-
         protected var currentActivity:BaseActivity;
         protected var _target:DisplayObjectContainer;
-        private var tracker:ITrack;
-        private var activeClassName:String;
-        private var os:String;
+        private var _tracker:ITrack;
+        protected var activeClassName:String;
+        protected var os:String;
+        private var _threadManager:IThreadManager;
+        private var _soundManager:ISoundManager;
 
-        public function ActivityManager(tracker:ITrack)
+        public function ActivityManager(tracker:ITrack = null, threadManager:IThreadManager = null, soundManager:ISoundManager = null)
         {
-            this.tracker = tracker;
+            _tracker = tracker;
+            _threadManager = threadManager ? threadManager : new ThreadManager();
+            _soundManager = soundManager ? soundManager : new SoundManager();
             os = DeviceUtil.os;
         }
 
@@ -54,10 +60,10 @@ package com.jessefreeman.factivity.managers
 
         public function setCurrentActivity(activity:Class, data:* = null):void
         {
-            if(tracker)
+            if (_tracker)
             {
                 activeClassName = String(activity).split(" ")[1].substr(0, -1);
-                tracker.trackPageview("/MatchHack/" + os + "/" + activeClassName);
+                _tracker.trackPageview("/MatchHack/" + os + "/" + activeClassName);
             }
 
             var newActivity:BaseActivity = new activity(this, data);
@@ -82,11 +88,11 @@ package com.jessefreeman.factivity.managers
 
         protected function addActivity(newActivity:BaseActivity):void
         {
-            if(tracker)
+            if (_tracker)
             {
                 //Inject tracker to any new Activity
-                if (newActivity.hasOwnProperty("tracker"))
-                    newActivity["tracker"] = tracker;
+                if (newActivity.hasOwnProperty("_tracker"))
+                    newActivity["_tracker"] = _tracker;
             }
 
             currentActivity = newActivity;
@@ -108,6 +114,21 @@ package com.jessefreeman.factivity.managers
         public function back():void
         {
             currentActivity.onBack()
+        }
+
+        public function get tracker():ITrack
+        {
+            return _tracker;
+        }
+
+        public function get threadManager():IThreadManager
+        {
+            return _threadManager;
+        }
+
+        public function get soundManager():ISoundManager
+        {
+            return _soundManager;
         }
     }
 }

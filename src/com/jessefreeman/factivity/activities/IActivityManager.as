@@ -27,12 +27,23 @@
  * Time: 9:14 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.jessefreeman.factivity.managers
+package com.jessefreeman.factivity.activities
 {
+    import com.jessefreeman.factivity.managers.*;
+    import com.jessefreeman.factivity.analytics.ITrack;
+    import com.jessefreeman.factivity.sounds.ISoundManager;
+    import com.jessefreeman.factivity.threads.IThreadManager;
+
     import flash.display.DisplayObjectContainer;
 
     public interface IActivityManager
     {
+        function get threadManager():IThreadManager;
+
+        function get soundManager():ISoundManager;
+
+        function get tracker():ITrack;
+
         function set target(value:DisplayObjectContainer):void;
 
         function setCurrentActivity(activity:Class, data:* = null):void;
