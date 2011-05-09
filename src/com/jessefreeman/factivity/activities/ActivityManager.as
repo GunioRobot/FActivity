@@ -45,6 +45,16 @@ package com.jessefreeman.factivity.activities
         private var _threadManager:IThreadManager;
         private var _soundManager:ISoundManager;
 
+        /**
+         * The Activity Manager is the main class that handles displaying and removing activities from the display. It
+         * also manages basic tracking if a tracker is provided, threads and the sound manager.
+         *
+         * @param tracker - requires a class that implements ITrack in order to do basic activity switching tracking.
+         * @param threadManager - This is the main thread manager to be used in the application. If one is not supplied
+         * an instance of the generic ThreadManager will be created automatically.
+         * @param soundManager  - This is the main sound manager to be used in the application. If one is not supplied
+         * an instance of the generic ThreadManager will be created automatically.
+         */
         public function ActivityManager(tracker:ITrack = null, threadManager:IThreadManager = null, soundManager:ISoundManager = null)
         {
             _tracker = tracker;
@@ -53,11 +63,24 @@ package com.jessefreeman.factivity.activities
             os = DeviceUtil.os;
         }
 
+        /**
+         * This is how to set the main display root. Ideally this is set to your main class that extends either Sprite
+         * or MovieClip. This is where all activities will be attached to.
+         *
+         * @param target
+         */
         public function set target(target:DisplayObjectContainer):void
         {
             _target = target;
         }
 
+        /**
+         * This switches out the currently displaying activity for a new one. Activities are automatically created from
+         * the supplied class reference.
+         *
+         * @param activity - Class of the Activity to be created.
+         * @param data - This is the data to be passed into the Activity's constructor.
+         */
         public function setCurrentActivity(activity:Class, data:* = null):void
         {
             if (_tracker)
@@ -70,12 +93,23 @@ package com.jessefreeman.factivity.activities
             onSwapActivities(newActivity);
         }
 
+        /**
+         * This is called by the main application loop. It allows the application to update the active activity.
+         *
+         * @param elapsed - time elapsed in MS since the last update.
+         */
         public function updateCurrentActivity(elapsed:Number = 0):void
         {
             if (currentActivity)
                 currentActivity.update(elapsed);
         }
 
+        /**
+         * Called when two activities are swapped. This is a good place to override when you want to add animation
+         * between two activities switching.
+         *
+         * @param newActivity - The new Activity to display.
+         */
         protected function onSwapActivities(newActivity:BaseActivity):void
         {
             if (currentActivity)
@@ -86,6 +120,12 @@ package com.jessefreeman.factivity.activities
             addActivity(newActivity);
         }
 
+        /**
+         * Called when the Activity is actually added to the display. Once an activity is added, a track is called
+         * assuming a tracker has been set up. Finally onStart is called on the activity.
+         *
+         * @param newActivity - The new Activity to display.
+         */
         protected function addActivity(newActivity:BaseActivity):void
         {
             if (_tracker)
@@ -102,30 +142,45 @@ package com.jessefreeman.factivity.activities
             currentActivity.onStart();
         }
 
+        /**
+         * This is called when an activity is removed from the display. Before an Activity is removed, onStop is called.
+         */
         protected function removeActivity():void
         {
             currentActivity.onStop();
 
             _target.removeChild(currentActivity);
 
-
         }
 
+        /**
+         * This method exposes the onBack call on the current activity.
+         */
         public function back():void
         {
-            currentActivity.onBack()
+            //TODO should this be built into a history of some kind.
+            currentActivity.onBack();
         }
 
+        /**
+         * Reference to the tracker instance.
+         */
         public function get tracker():ITrack
         {
             return _tracker;
         }
 
+        /**
+         * Reference to the thread manager instance.
+         */
         public function get threadManager():IThreadManager
         {
             return _threadManager;
         }
 
+        /**
+         * Reference to the sound manager instance.
+         */
         public function get soundManager():ISoundManager
         {
             return _soundManager;

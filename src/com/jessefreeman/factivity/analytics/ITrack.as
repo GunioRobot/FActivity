@@ -22,8 +22,12 @@
 
 package com.jessefreeman.factivity.analytics
 {
+    import avmplus.accessorXml;
+
     public interface ITrack
     {
         function trackPageview(a:String = ""):void;
+
+        function track(type:String, ...arguments);
     }
 }

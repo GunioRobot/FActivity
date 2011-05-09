@@ -32,6 +32,9 @@ package com.jessefreeman.factivity.managers
         private var singletons:Dictionary = new Dictionary();
 
         /**
+         * This is a simple singleton manager to allow you turn regular class instances into singletons in order to
+         * retain inheritance. It should probably be avoided unless you really really really need a singleton.
+         *
          * @param enforcer
          */
         public function SingletonManager(enforcer:SingletonEnforcer)
