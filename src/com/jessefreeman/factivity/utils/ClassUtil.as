@@ -23,18 +23,25 @@
 
 package com.jessefreeman.factivity.utils
 {
+    import flash.utils.getQualifiedClassName;
+
     public class ClassUtil
     {
 
         /**
          * Converts a class into a string.
          *
-         * @param value Class to convert to string.
+         * @param target Class to convert to string.
          * @return String name of supplied class.
          */
-        public static function classToString(value:Class):String
+        public static function classToString(target:Class):String
         {
-            return String(value).split(" ")[1].substr(0, -1);
+            return String(target).split(" ")[1].substr(0, -1);
+        }
+
+        public static function className(target:Object):String
+        {
+            return getQualifiedClassName(target).split("::")[1];
         }
     }
 }
