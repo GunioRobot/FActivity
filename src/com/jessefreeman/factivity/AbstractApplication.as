@@ -66,7 +66,7 @@ package com.jessefreeman.factivity
          * @param scale This is the X and Y scale of the application. This can be used to
          *        upscale the app on mobile devices
          */
-        public function AbstractApplication(activityManager, startActivity:Class, x:int = 0, y:int = 0, scale:Number = 1, frameRate:int = 30)
+        public function AbstractApplication(activityManager:IActivityManager, startActivity:Class, x:int = 0, y:int = 0, scale:Number = 1, frameRate:int = 30)
         {
             soundManager = activityManager.soundManager;
             this.frameRate = frameRate;
