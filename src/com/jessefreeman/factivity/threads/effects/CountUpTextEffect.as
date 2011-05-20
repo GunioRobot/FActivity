@@ -85,5 +85,15 @@ package com.jessefreeman.factivity.threads.effects
         {
             return padding.slice(0, padding.length - value.toString().length) + value.toString()
         }
+
+        public function forceStop():void
+        {
+            counter = value;
+            target.text = pad(paddedText, counter.toString());
+
+            if (counter == value)
+                finish();
+        }
+
     }
 }
