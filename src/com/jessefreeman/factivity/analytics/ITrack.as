@@ -28,6 +28,6 @@ package com.jessefreeman.factivity.analytics
     {
         function trackPageview(a:String = ""):void;
 
-        function track(type:String, ...arguments);
+        function track(type:String, ...arguments):void;
     }
 }

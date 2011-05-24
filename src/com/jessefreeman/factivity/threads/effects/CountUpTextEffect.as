@@ -40,22 +40,10 @@ package com.jessefreeman.factivity.threads.effects
             super(updateCallback, finishCallback);
         }
 
-        public function newValue(value:Number, paddedText:String = ""):void
+        public function resetValues(value:Number, initialValue:int = 0, speed:int = 1, paddedText:String = ""):void
         {
-            speed = 1;
-            if (value > 100)
-            {
-                speed = 10;
-            }
-            else if (value > 500)
-            {
-                speed = 50;
-            }
-            else if (value > 1000)
-            {
-                speed = 100;
-            }
-
+            counter = initialValue;
+            this.speed = speed;
             this.paddedText = paddedText;
             this.value = value;
         }
@@ -63,8 +51,8 @@ package com.jessefreeman.factivity.threads.effects
 
         override public function start():void
         {
-            target.text = paddedText;
-            counter = 0;
+            updateText(counter);
+
             super.start();
         }
 
@@ -75,10 +63,15 @@ package com.jessefreeman.factivity.threads.effects
             if (counter > value)
                 counter = value;
 
-            target.text = pad(paddedText, counter.toString());
+            updateText(counter);
 
             if (counter == value)
                 finish();
+        }
+
+        protected function updateText(value:int):void
+        {
+            target.htmlText = pad(paddedText, value.toString());
         }
 
         private function pad(padding:String, value:String):String
@@ -89,7 +82,7 @@ package com.jessefreeman.factivity.threads.effects
         public function forceStop():void
         {
             counter = value;
-            target.text = pad(paddedText, counter.toString());
+            updateText(counter);
 
             if (counter == value)
                 finish();

@@ -170,6 +170,7 @@ package com.jessefreeman.factivity.activities
          */
         public function onStart():void
         {
+            stage.focus = stage;
             //Override and add custom logic here.
         }
 

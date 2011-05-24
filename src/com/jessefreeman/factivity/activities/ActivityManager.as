@@ -34,6 +34,7 @@ package com.jessefreeman.factivity.activities
     import com.jessefreeman.factivity.utils.DeviceUtil;
 
     import flash.display.DisplayObjectContainer;
+    import flash.display.Stage;
 
     public class ActivityManager implements IActivityManager
     {

@@ -55,7 +55,7 @@ package com.jessefreeman.factivity.threads.effects
 
         override public function start():void
         {
-            target.text = "";
+            target.htmlText = "";
             counter = 0;
             super.start();
         }
@@ -67,7 +67,7 @@ package com.jessefreeman.factivity.threads.effects
             if (counter > message.length)
                 counter = message.length;
 
-            target.text = message.substr(0, counter);
+            target.htmlText = message.substr(0, counter);
 
 
             if (counter == message.length)
