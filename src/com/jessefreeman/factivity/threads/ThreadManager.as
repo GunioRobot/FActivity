@@ -23,13 +23,11 @@
 
 package com.jessefreeman.factivity.threads
 {
-    import flash.utils.Dictionary;
 
     public class ThreadManager implements IThreadManager
     {
         private var maxActive:int;
         private var threads:Array = [];
-        private var instances:Dictionary = new Dictionary(true);
 
         public function ThreadManager(maxActive:int = 10)
         {
@@ -38,16 +36,14 @@ package com.jessefreeman.factivity.threads
 
         public function addThread(value:IRunnable):int
         {
-
-            if (!instances[value])
+            var index:int = threads.indexOf(value);
+            if (index == -1)
             {
-                var index:int = threads.length < maxActive ? (threads.push(value) - 1) : -1;
-                instances[value] = index;
+                index = (threads.push(value) - 1);
             }
-
             value.start();
 
-            return instances[value];
+            return index;
         }
 
         public function update(elapsed:Number = 0):void
@@ -58,12 +54,11 @@ package com.jessefreeman.factivity.threads
                 return;
 
             var i:int;
-            var thread:IRunnable;
             var finishedThreads:Array = [];
 
+            var thread:IRunnable;
             for (i = 0; i < total; i++)
             {
-
                 thread = threads[i];
 
                 thread.run(elapsed);
@@ -71,11 +66,13 @@ package com.jessefreeman.factivity.threads
                     finishedThreads.push(thread);
             }
 
-            removeThreads.apply(this, finishedThreads)
+            if(finishedThreads.length > 0)
+                removeThreads.apply(this, finishedThreads);
         }
 
         public function removeThreads(...threads):void
         {
+            trace("Remove Threads", threads);
             var thread:IRunnable;
             for each(thread in threads)
             {
@@ -85,9 +82,11 @@ package com.jessefreeman.factivity.threads
 
         public function removeThread(value:IRunnable):IRunnable
         {
-            var index:int = instances[value];
+            var index:int = threads.indexOf(value);
+            if (index == -1)
+                return null;
+
             threads.splice(index, 1);
-            delete instances[value];
             return value;
         }
     }

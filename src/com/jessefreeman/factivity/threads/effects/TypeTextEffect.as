@@ -29,11 +29,12 @@
  */
 package com.jessefreeman.factivity.threads.effects
 {
-    import com.jessefreeman.factivity.threads.Thread;
+import com.jessefreeman.factivity.threads.IRunnable;
+import com.jessefreeman.factivity.threads.Thread;
 
     import flash.text.TextField;
 
-    public class TypeTextEffect extends Thread
+    public class TypeTextEffect extends Thread implements IRunnable
     {
         private var target:TextField;
         private var message:String;
@@ -72,6 +73,11 @@ package com.jessefreeman.factivity.threads.effects
 
             if (counter == message.length)
                 finish();
+        }
+
+        override public function toString():String
+        {
+            return "TypeTextEffect" + super.toString();
         }
     }
 }

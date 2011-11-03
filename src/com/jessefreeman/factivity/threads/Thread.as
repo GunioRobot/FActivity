@@ -85,5 +85,11 @@ package com.jessefreeman.factivity.threads
             if (finishCallback != null)
                 finishCallback();
         }
+
+        public function toString():String
+        {
+            return "Thread";
+        }
+
     }
 }

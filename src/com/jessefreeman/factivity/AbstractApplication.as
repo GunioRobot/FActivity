@@ -25,8 +25,6 @@ package com.jessefreeman.factivity
 {
     import com.jessefreeman.factivity.activities.IActivityManager;
     import com.jessefreeman.factivity.sounds.ISoundManager;
-    import com.jessefreeman.factivity.managers.SingletonManager;
-    import com.jessefreeman.factivity.sounds.SoundManager;
 
     import flash.display.Sprite;
     import flash.events.Event;

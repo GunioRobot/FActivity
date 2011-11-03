@@ -36,5 +36,7 @@ package com.jessefreeman.factivity.threads
         function isRunning():Boolean;
 
         function start():void;
+
+        function toString():String;
     }
 }

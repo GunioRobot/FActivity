@@ -137,5 +137,10 @@ package com.jessefreeman.factivity.threads.effects
             defaultX = _target.x;
             defaultY = _target.y;
         }
+
+        override public function toString():String
+        {
+            return "Quake" + super.toString();
+        }
     }
 }

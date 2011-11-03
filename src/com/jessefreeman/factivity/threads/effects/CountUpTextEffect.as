@@ -88,5 +88,10 @@ package com.jessefreeman.factivity.threads.effects
                 finish();
         }
 
+        override public function toString():String
+        {
+            return "CountUpTextEffect" + super.toString();
+        }
+
     }
 }
