@@ -72,7 +72,6 @@ package com.jessefreeman.factivity.threads
 
         public function removeThreads(...threads):void
         {
-            trace("Remove Threads", threads);
             var thread:IRunnable;
             for each(thread in threads)
             {
